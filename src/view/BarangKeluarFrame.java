@@ -11,7 +11,7 @@ package view;
 public class BarangKeluarFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form BarangKeluarFrame
+     * Creates new form LaporanFrame
      */
     public BarangKeluarFrame() {
         initComponents();
