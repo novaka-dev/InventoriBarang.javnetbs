@@ -8,6 +8,6 @@ package dao;
  *
  * @author Novaka Saputra
  */
-public class BarangDAO {
+public class BarangKeliar {
     
 }
