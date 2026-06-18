@@ -8,13 +8,20 @@ package model;
  *
  * @author Novaka Saputra
  */
-public class BarangMasuk {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+public class BarangMasuk extends Transaksi {
+    private String supplier;
+ 
+    public BarangMasuk() {}
+ 
+    public BarangMasuk(String idTransaksi, String idBarang, String namaBarang,
+                       int jumlah, String tanggal, String keterangan, String supplier) {
+        super(idTransaksi, idBarang, namaBarang, jumlah, tanggal, keterangan);
+        this.supplier = supplier;
     }
-    
+ 
+    public String getSupplier()         { return supplier; }
+    public void   setSupplier(String s) { this.supplier = s; }
+ 
+    @Override
+    public String getTipeTransaksi() { return "MASUK"; }
 }
