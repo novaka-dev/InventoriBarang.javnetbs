@@ -4,6 +4,10 @@
  */
 package view;
 
+
+import java.awt.Color;
+import javax.swing.*;
+import java.sql.*;
 /**
  *
  * @author Novaka Saputra
@@ -26,17 +30,170 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        lblketerangan = new javax.swing.JLabel();
+        lbljumlahkeluar = new javax.swing.JLabel();
+        lblpilihbarang = new javax.swing.JLabel();
+        lblstoksaatini = new javax.swing.JLabel();
+        lbltujuan = new javax.swing.JLabel();
+        lbltanggal = new javax.swing.JLabel();
+        cmbbarang = new javax.swing.JComboBox<>();
+        txtstoksaatini = new javax.swing.JTextField();
+        txtjumlahkeluar = new javax.swing.JTextField();
+        txttujuan = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtketerangan = new javax.swing.JTextArea();
+        datetanggal = new datechooser.beans.DateChooserCombo();
+        btnreset = new javax.swing.JButton();
+        btnsimpan = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        lblJudulBarangKeluar = new javax.swing.JLabel();
+        lblCatatan = new javax.swing.JLabel();
+        Icon = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jPanel1.setBackground(new java.awt.Color(48, 48, 47));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setBackground(new java.awt.Color(80, 80, 80));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "FORM INPUT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Poppins", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblketerangan.setBackground(new java.awt.Color(255, 255, 255));
+        lblketerangan.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        lblketerangan.setForeground(new java.awt.Color(255, 255, 255));
+        lblketerangan.setText("Keterangan    ");
+        jPanel4.add(lblketerangan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+
+        lbljumlahkeluar.setBackground(new java.awt.Color(255, 255, 255));
+        lbljumlahkeluar.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        lbljumlahkeluar.setForeground(new java.awt.Color(255, 255, 255));
+        lbljumlahkeluar.setText("Jumlah Keluar");
+        jPanel4.add(lbljumlahkeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        lblpilihbarang.setBackground(new java.awt.Color(255, 255, 255));
+        lblpilihbarang.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        lblpilihbarang.setForeground(new java.awt.Color(255, 255, 255));
+        lblpilihbarang.setText("Pilih Barang");
+        jPanel4.add(lblpilihbarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+
+        lblstoksaatini.setBackground(new java.awt.Color(255, 255, 255));
+        lblstoksaatini.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        lblstoksaatini.setForeground(new java.awt.Color(255, 255, 255));
+        lblstoksaatini.setText("Stok Saat Ini");
+        jPanel4.add(lblstoksaatini, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+
+        lbltujuan.setBackground(new java.awt.Color(255, 255, 255));
+        lbltujuan.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        lbltujuan.setForeground(new java.awt.Color(255, 255, 255));
+        lbltujuan.setText("Tujuan");
+        jPanel4.add(lbltujuan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+
+        lbltanggal.setBackground(new java.awt.Color(255, 255, 255));
+        lbltanggal.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        lbltanggal.setForeground(new java.awt.Color(255, 255, 255));
+        lbltanggal.setText("Tanggal       ");
+        jPanel4.add(lbltanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+
+        cmbbarang.setBackground(new java.awt.Color(225, 225, 225));
+        cmbbarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel4.add(cmbbarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 250, -1));
+
+        txtstoksaatini.setBackground(new java.awt.Color(225, 225, 225));
+        jPanel4.add(txtstoksaatini, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 250, -1));
+
+        txtjumlahkeluar.setBackground(new java.awt.Color(225, 225, 225));
+        jPanel4.add(txtjumlahkeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 250, -1));
+
+        txttujuan.setBackground(new java.awt.Color(225, 225, 225));
+        jPanel4.add(txttujuan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 250, -1));
+
+        txtketerangan.setBackground(new java.awt.Color(225, 225, 225));
+        txtketerangan.setColumns(20);
+        txtketerangan.setRows(5);
+        jScrollPane1.setViewportView(txtketerangan);
+
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 250, -1));
+        jPanel4.add(datetanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 250, -1));
+
+        btnreset.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        btnreset.setText("Reset");
+        btnreset.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel4.add(btnreset, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 210, 40));
+
+        btnsimpan.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        btnsimpan.setText("Simpan");
+        btnsimpan.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel4.add(btnsimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 210, 40));
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 500, 360));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 583, 530, 0));
+
+        jPanel5.setBackground(new java.awt.Color(80, 80, 80));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RIWAYAT BARANG KELUAR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Poppins", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        jPanel5.add(jScrollPane2);
+
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 500, 470));
+
+        jPanel2.setBackground(new java.awt.Color(45, 122, 80));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblJudulBarangKeluar.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
+        lblJudulBarangKeluar.setForeground(new java.awt.Color(255, 255, 255));
+        lblJudulBarangKeluar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblJudulBarangKeluar.setText("Barang Keluar");
+        jPanel2.add(lblJudulBarangKeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
+
+        lblCatatan.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        lblCatatan.setForeground(new java.awt.Color(221, 221, 221));
+        lblCatatan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCatatan.setText("Catatan stok barang   ");
+        jPanel2.add(lblCatatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 220, 22));
+
+        Icon.setForeground(Color.WHITE);
+        Icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/store.png"))); // NOI18N
+        jPanel2.add(Icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, -1));
+
+        jScrollPane3.setViewportView(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 631, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 428, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
@@ -78,5 +235,31 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Icon;
+    private javax.swing.JButton btnreset;
+    private javax.swing.JButton btnsimpan;
+    private javax.swing.JComboBox<String> cmbbarang;
+    private datechooser.beans.DateChooserCombo datetanggal;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblCatatan;
+    private javax.swing.JLabel lblJudulBarangKeluar;
+    private javax.swing.JLabel lbljumlahkeluar;
+    private javax.swing.JLabel lblketerangan;
+    private javax.swing.JLabel lblpilihbarang;
+    private javax.swing.JLabel lblstoksaatini;
+    private javax.swing.JLabel lbltanggal;
+    private javax.swing.JLabel lbltujuan;
+    private javax.swing.JTextField txtjumlahkeluar;
+    private javax.swing.JTextArea txtketerangan;
+    private javax.swing.JTextField txtstoksaatini;
+    private javax.swing.JTextField txttujuan;
     // End of variables declaration//GEN-END:variables
 }
