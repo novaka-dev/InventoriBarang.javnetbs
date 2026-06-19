@@ -33,43 +33,48 @@ public class BarangMasukFrame extends javax.swing.JFrame {
      */
     public BarangMasukFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
         initTable();
         loadComboBarang();
 //        setTanggalHariIni();
         txtTanggal.setDate(new java.util.Date());
+        
     }
     
     // ── 4. METHOD-METHOD ─────────────────────────────────────────────────────────
     
     // Setup kolom JTable
-private void initTable() {
-    tableModel = new DefaultTableModel(
-        new String[]{"ID Transaksi", "Nama Barang", "Jumlah", "Supplier", "Tanggal", "Keterangan"},
-        0
-    ) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
+    private void initTable() {
+        tableModel = new DefaultTableModel(
+            // "Kategori" resmi disisipkan di kolom ke-3 (indeks 2)
+            new String[]{"ID Transaksi", "Nama Barang", "Kategori", "Jumlah", "Supplier", "Tanggal", "Keterangan"},
+            0
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Mengunci tabel agar tidak bisa diedit manual
+            }
+        };
 
-    tblRiwayat.setModel(tableModel);
+        tblRiwayat.setModel(tableModel);
 
-    tblRiwayat.setAutoResizeMode(
-        javax.swing.JTable.AUTO_RESIZE_OFF
-    );
+        tblRiwayat.setAutoResizeMode(
+            javax.swing.JTable.AUTO_RESIZE_OFF
+        );
 
-    tblRiwayat.getColumnModel().getColumn(0).setPreferredWidth(100);
-    tblRiwayat.getColumnModel().getColumn(1).setPreferredWidth(200);
-    tblRiwayat.getColumnModel().getColumn(2).setPreferredWidth(100);
-    tblRiwayat.getColumnModel().getColumn(3).setPreferredWidth(200);
-    tblRiwayat.getColumnModel().getColumn(4).setPreferredWidth(120);
-    tblRiwayat.getColumnModel().getColumn(5).setPreferredWidth(300);
+        // Atur ulang proporsi lebar 7 kolom lo
+        tblRiwayat.getColumnModel().getColumn(0).setPreferredWidth(100); // ID Transaksi
+        tblRiwayat.getColumnModel().getColumn(1).setPreferredWidth(150); // Nama Barang
+        tblRiwayat.getColumnModel().getColumn(2).setPreferredWidth(120); // Kategori (BARU)
+        tblRiwayat.getColumnModel().getColumn(3).setPreferredWidth(80);  // Jumlah
+        tblRiwayat.getColumnModel().getColumn(4).setPreferredWidth(150); // Supplier
+        tblRiwayat.getColumnModel().getColumn(5).setPreferredWidth(100); // Tanggal
+        tblRiwayat.getColumnModel().getColumn(6).setPreferredWidth(250); // Keterangan
 
-    tblRiwayat.getTableHeader().setReorderingAllowed(false);
+        tblRiwayat.getTableHeader().setReorderingAllowed(false);
 
-    refreshTable();
-}
+        refreshTable();
+    }
  
 // Isi ComboBox dengan data barang dari controller
 private void loadComboBarang() {
@@ -102,24 +107,33 @@ private void loadComboBarang() {
  
     // Refresh data tabel dari controller
     private void refreshTable() {
-        tableModel.setRowCount(0); // kosongkan dulu
-        List<BarangMasuk> list = masukCtrl.getAllBarangMasuk();
-        for (BarangMasuk bm : list) {
-            tableModel.addRow(new Object[]{
-                bm.getIdTransaksi(),
-                bm.getNamaBarang(),
-                bm.getJumlah(),
-                bm.getSupplier(),
-                bm.getTanggal(),
-                bm.getKeterangan()
-            });
-        }
+    tableModel.setRowCount(0); // Kosongkan tabel riwayat lama
+    List<BarangMasuk> list = masukCtrl.getAllBarangMasuk();
+    
+    for (BarangMasuk bm : list) {
+        // Cari objek barang asli berdasarkan idBarang transaksi
+        Barang b = barangCtrl.findById(bm.getIdBarang());
+        
+        // Jika barang ketemu di master, ambil kategorinya. Jika tidak ada, kasih tanda strip
+        String kategoriOtomatis = (b != null) ? b.getKategori() : "-";
+
+        tableModel.addRow(new Object[]{
+            bm.getIdTransaksi(),
+            bm.getNamaBarang(),
+            kategoriOtomatis, // Ditulis otomatis ke kolom tabel riwayat
+            bm.getJumlah(),
+            bm.getSupplier(),
+            bm.getTanggal(),
+            bm.getKeterangan()
+        });
     }
+}
  
     // Reset semua input form ke kondisi awal
     private void resetForm() {
         cmbPilihBarang.setSelectedIndex(0);
         txtStokSaatIni.setText("");
+        txtKategori.setText(""); // Bersihkan teks komponen kategori baru
         txtJumlahMasuk.setText("");
         txtSupplier.setText("");
         setTanggalHariIni();
@@ -159,9 +173,12 @@ private void loadComboBarang() {
         txtSupplier = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtKeterangan = new javax.swing.JTextArea();
-        btnReset = new javax.swing.JButton();
+        btnKembali = new javax.swing.JButton();
         btnSimpan = new javax.swing.JButton();
         txtTanggal = new com.toedter.calendar.JDateChooser();
+        jLabel10 = new javax.swing.JLabel();
+        txtKategori = new javax.swing.JTextField();
+        btnReset1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -202,13 +219,13 @@ private void loadComboBarang() {
         jLabel3.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Keterangan    ");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Jumlah Masuk");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -220,19 +237,19 @@ private void loadComboBarang() {
         jLabel7.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Stok Saat Ini");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Supplier      ");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Tanggal       ");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
         cmbPilihBarang.setBackground(new java.awt.Color(225, 225, 225));
         cmbPilihBarang.addItemListener(new java.awt.event.ItemListener() {
@@ -243,30 +260,30 @@ private void loadComboBarang() {
         jPanel3.add(cmbPilihBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 250, -1));
 
         txtStokSaatIni.setBackground(new java.awt.Color(225, 225, 225));
-        jPanel3.add(txtStokSaatIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 250, -1));
+        jPanel3.add(txtStokSaatIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 250, -1));
 
         txtJumlahMasuk.setBackground(new java.awt.Color(225, 225, 225));
-        jPanel3.add(txtJumlahMasuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 250, -1));
+        jPanel3.add(txtJumlahMasuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 250, -1));
 
         txtSupplier.setBackground(new java.awt.Color(225, 225, 225));
-        jPanel3.add(txtSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 250, -1));
+        jPanel3.add(txtSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 250, -1));
 
         txtKeterangan.setBackground(new java.awt.Color(225, 225, 225));
         txtKeterangan.setColumns(20);
         txtKeterangan.setRows(5);
         jScrollPane1.setViewportView(txtKeterangan);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 250, -1));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 250, -1));
 
-        btnReset.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        btnReset.setText("Reset");
-        btnReset.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnReset.addActionListener(new java.awt.event.ActionListener() {
+        btnKembali.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        btnKembali.setText("Kembali");
+        btnKembali.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnKembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResetActionPerformed(evt);
+                btnKembaliActionPerformed(evt);
             }
         });
-        jPanel3.add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 210, 40));
+        jPanel3.add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 430, 40));
 
         btnSimpan.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         btnSimpan.setText("Simpan");
@@ -276,10 +293,29 @@ private void loadComboBarang() {
                 btnSimpanActionPerformed(evt);
             }
         });
-        jPanel3.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 210, 40));
-        jPanel3.add(txtTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 250, -1));
+        jPanel3.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 210, 40));
+        jPanel3.add(txtTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 250, -1));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 500, 360));
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Kategori");
+        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+
+        txtKategori.setBackground(new java.awt.Color(225, 225, 225));
+        jPanel3.add(txtKategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 250, -1));
+
+        btnReset1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        btnReset1.setText("Reset");
+        btnReset1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnReset1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReset1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnReset1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 210, 40));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 500, 410));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 583, 530, 0));
 
         jPanel4.setBackground(new java.awt.Color(80, 80, 80));
@@ -301,9 +337,9 @@ private void loadComboBarang() {
 
         jPanel4.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 500, 270));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 620, 500, 270));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 1170));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 950));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -355,10 +391,21 @@ private void loadComboBarang() {
         }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
-    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
         // TODO add your handling code here:
-        resetForm();
-    }//GEN-LAST:event_btnResetActionPerformed
+        // 1. Buat objek instansi dari halaman Main Menu lo
+        // Sesuaikan "MainMenuFrame" dengan nama class JFrame menu utama lo yang asli
+        MainMenuFrame mainMenu = new MainMenuFrame();
+
+        // 2. Munculkan halaman Main Menu ke layar
+        mainMenu.setVisible(true);
+
+        // 3. Atur posisi Main Menu otomatis di tengah layar komputer
+        mainMenu.setLocationRelativeTo(null);
+
+        // 4. Tutup dan hancurkan halaman Barang Masuk saat ini dari memori
+        this.dispose();
+    }//GEN-LAST:event_btnKembaliActionPerformed
 
     private void cmbPilihBarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPilihBarangItemStateChanged
         // TODO add your handling code here:
@@ -367,13 +414,22 @@ private void loadComboBarang() {
             if (idBarang != null) {
                 Barang barang = barangCtrl.findById(idBarang);
                 if (barang != null) {
+                    // 1. Otomatis set stok saat ini
                     txtStokSaatIni.setText(String.valueOf(barang.getStok()) + " unit");
+
+                    // 2. Otomatis set kategori sesuai data master barang (BARU)
+                    txtKategori.setText(barang.getKategori());
                 }
             } else {
                 txtStokSaatIni.setText("");
             }
         }
     }//GEN-LAST:event_cmbPilihBarangItemStateChanged
+
+    private void btnReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReset1ActionPerformed
+        // TODO add your handling code here:
+        resetForm();
+    }//GEN-LAST:event_btnReset1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -411,11 +467,13 @@ private void loadComboBarang() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnKembali;
+    private javax.swing.JButton btnReset1;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JComboBox<String> cmbPilihBarang;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -433,6 +491,7 @@ private void loadComboBarang() {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tblRiwayat;
     private javax.swing.JTextField txtJumlahMasuk;
+    private javax.swing.JTextField txtKategori;
     private javax.swing.JTextArea txtKeterangan;
     private javax.swing.JTextField txtStokSaatIni;
     private javax.swing.JTextField txtSupplier;
