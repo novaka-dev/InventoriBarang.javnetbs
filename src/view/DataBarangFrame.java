@@ -3,18 +3,60 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
+import controller.BarangController;
+import model.Barang;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 /**
  *
  * @author Novaka Saputra
  */
 public class DataBarangFrame extends javax.swing.JFrame {
-
+    private BarangController controller = new BarangController();
+    private DefaultTableModel model;
     /**
      * Creates new form DataBarangFrame
      */
     public DataBarangFrame() {
         initComponents();
+        
+         model = (DefaultTableModel) tblBarang.getModel();
+        cmbKategori.removeAllItems();
+        cmbKategori.addItem("Alat Tulis");
+        cmbKategori.addItem("Kertas");
+        cmbKategori.addItem("Tinta");
+        cmbKategori.addItem("Elektronik");
+
+        loadData();
+    }
+    
+    private void loadData() {
+        model.setRowCount(0);
+        List<Barang> list = controller.getAllBarang();
+        
+        for (Barang b : list) {
+            model.addRow(new Object[]{
+                b.getIdBarang(),
+                b.getNama(),
+                b.getKategori(),
+                b.getStok(),
+                b.getHarga(),
+                b.getSupplier()
+            });
+        }
+
+        lblTotalBarang.setText(String.valueOf(list.size()));
+        txtIdBarang.setText(controller.generateId());
+    }
+    
+    private void clearForm() {
+        txtIdBarang.setText("");
+        txtNamaBarang.setText("");
+        txtStok.setText("");
+        txtHarga.setText("");
+        txtSupplier.setText("");
+        cmbKategori.setSelectedIndex(0);
     }
 
     /**
@@ -36,35 +78,35 @@ public class DataBarangFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtStok = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtIdBarang = new javax.swing.JTextField();
+        txtSupplier = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        txtCari = new javax.swing.JTextField();
+        txtNamaBarang = new javax.swing.JTextField();
+        txtHarga = new javax.swing.JTextField();
+        btnBersihkan = new javax.swing.JButton();
+        btnCari = new javax.swing.JButton();
+        btnSimpan = new javax.swing.JButton();
+        btnUbah = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        btnTambah = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jLabel17 = new javax.swing.JLabel();
+        tblBarang = new javax.swing.JTable();
+        lblTotalBarang = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
+        cmbKategori = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,7 +192,7 @@ public class DataBarangFrame extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Nama Barang");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 120, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, 180, 30));
+        jPanel1.add(txtStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, 180, 30));
 
         jLabel6.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -167,9 +209,9 @@ public class DataBarangFrame extends javax.swing.JFrame {
         jLabel8.setText(":");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 10, -1));
 
-        jTextField2.setBorder(null);
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 180, 30));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, 180, 30));
+        txtIdBarang.setBorder(null);
+        jPanel1.add(txtIdBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 180, 30));
+        jPanel1.add(txtSupplier, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, 180, 30));
 
         jLabel9.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -200,46 +242,71 @@ public class DataBarangFrame extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText(":");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 10, -1));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, 180, 30));
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 180, 30));
+        jPanel1.add(txtCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, 180, 30));
+        jPanel1.add(txtNamaBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 180, 30));
 
-        jTextField6.setToolTipText("");
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 180, 30));
+        txtHarga.setToolTipText("");
+        jPanel1.add(txtHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 180, 30));
 
-        jButton1.setBackground(new java.awt.Color(79, 79, 79));
-        jButton1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Bersihkan");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 360, 100, 30));
+        btnBersihkan.setBackground(new java.awt.Color(79, 79, 79));
+        btnBersihkan.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        btnBersihkan.setForeground(new java.awt.Color(255, 255, 255));
+        btnBersihkan.setText("Bersihkan");
+        btnBersihkan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnBersihkan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBersihkanActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBersihkan, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 360, 100, 30));
 
-        jButton2.setBackground(new java.awt.Color(79, 79, 79));
-        jButton2.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cari");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 440, 60, 30));
+        btnCari.setBackground(new java.awt.Color(79, 79, 79));
+        btnCari.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        btnCari.setForeground(new java.awt.Color(255, 255, 255));
+        btnCari.setText("Cari");
+        btnCari.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCariActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 440, 60, 30));
 
-        jButton3.setBackground(new java.awt.Color(79, 79, 79));
-        jButton3.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Simpan");
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 100, 30));
+        btnSimpan.setBackground(new java.awt.Color(79, 79, 79));
+        btnSimpan.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
+        btnSimpan.setText("Simpan");
+        btnSimpan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 100, 30));
 
-        jButton4.setBackground(new java.awt.Color(79, 79, 79));
-        jButton4.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Ubah");
-        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 360, 100, 30));
+        btnUbah.setBackground(new java.awt.Color(79, 79, 79));
+        btnUbah.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        btnUbah.setForeground(new java.awt.Color(255, 255, 255));
+        btnUbah.setText("Ubah");
+        btnUbah.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnUbah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUbahActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnUbah, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 360, 100, 30));
 
-        jButton6.setBackground(new java.awt.Color(79, 79, 79));
-        jButton6.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Hapus");
-        jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 360, 100, 30));
+        btnHapus.setBackground(new java.awt.Color(79, 79, 79));
+        btnHapus.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        btnHapus.setForeground(new java.awt.Color(255, 255, 255));
+        btnHapus.setText("Hapus");
+        btnHapus.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 360, 100, 30));
 
         jLabel15.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -250,34 +317,43 @@ public class DataBarangFrame extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText(":");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, 10, -1));
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 180, 30));
 
-        jButton5.setBackground(new java.awt.Color(79, 79, 79));
-        jButton5.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Tambah");
-        jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 100, 30));
+        btnTambah.setBackground(new java.awt.Color(79, 79, 79));
+        btnTambah.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        btnTambah.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambah.setText("Tambah");
+        btnTambah.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 100, 30));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblBarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID Barang", "Nama Barang", "Kategori", "Stok", "Harga", "Supplier"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        tblBarang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBarangMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblBarang);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 640, 240));
 
-        jLabel17.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("100");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 760, 40, -1));
+        lblTotalBarang.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        lblTotalBarang.setForeground(new java.awt.Color(255, 255, 255));
+        lblTotalBarang.setText("100");
+        jPanel1.add(lblTotalBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 760, 40, -1));
 
         jLabel18.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
@@ -288,6 +364,8 @@ public class DataBarangFrame extends javax.swing.JFrame {
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Cari Barang");
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 100, -1));
+
+        jPanel1.add(cmbKategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 180, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -304,6 +382,116 @@ public class DataBarangFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        txtIdBarang.setText(controller.generateId());
+        txtNamaBarang.setText("");
+        txtStok.setText("");
+        txtHarga.setText("");
+        txtSupplier.setText("");
+        txtNamaBarang.requestFocus();
+    }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        String pesan = controller.validasiInput(
+        txtIdBarang.getText(),
+        txtNamaBarang.getText(),
+        txtStok.getText(),
+        txtHarga.getText(),
+        txtSupplier.getText()
+        );
+
+        if (pesan != null) {
+            JOptionPane.showMessageDialog(this, pesan);
+            return;
+        }
+        boolean berhasil = controller.tambahBarang(
+                txtIdBarang.getText(),
+                txtNamaBarang.getText(),
+                cmbKategori.getSelectedItem().toString(),
+                Integer.parseInt(txtStok.getText()),
+                Integer.parseInt(txtHarga.getText()),
+                txtSupplier.getText()
+        );
+        if (berhasil) {
+            JOptionPane.showMessageDialog(this,
+                    "Data berhasil disimpan");
+            loadData();
+            clearForm();
+
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "ID Barang sudah ada");
+        }
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
+        boolean berhasil = controller.updateBarang(
+        txtIdBarang.getText(),
+        txtNamaBarang.getText(),
+        cmbKategori.getSelectedItem().toString(),
+        Integer.parseInt(txtStok.getText()),
+        Integer.parseInt(txtHarga.getText()),
+        txtSupplier.getText()
+        );
+
+        if (berhasil) {
+            JOptionPane.showMessageDialog(this,
+                    "Data berhasil diubah");
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Data gagal diubah");
+        }
+    }//GEN-LAST:event_btnUbahActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        int konfirmasi = JOptionPane.showConfirmDialog(
+        this,
+        "Yakin ingin menghapus data?",
+        "Konfirmasi",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if (konfirmasi == JOptionPane.YES_OPTION) {
+            controller.hapusBarang(
+                    txtIdBarang.getText()
+            );
+            loadData();
+            clearForm();
+        }
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBersihkanActionPerformed
+        clearForm();
+    }//GEN-LAST:event_btnBersihkanActionPerformed
+
+    private void tblBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBarangMouseClicked
+        int row = tblBarang.getSelectedRow();
+
+        txtIdBarang.setText(model.getValueAt(row, 0).toString());
+        txtNamaBarang.setText(model.getValueAt(row, 1).toString());
+        cmbKategori.setSelectedItem(model.getValueAt(row, 2).toString());
+        txtStok.setText(model.getValueAt(row, 3).toString());
+        txtHarga.setText(model.getValueAt(row, 4).toString());
+        txtSupplier.setText(model.getValueAt(row, 5).toString());
+    }//GEN-LAST:event_tblBarangMouseClicked
+
+    private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
+        String keyword = txtCari.getText();
+        model.setRowCount(0);
+
+        for (Barang b : controller.cariBarang(keyword)) {
+            model.addRow(new Object[]{
+                b.getIdBarang(),
+                b.getNama(),
+                b.getKategori(),
+                b.getStok(),
+                b.getHarga(),
+                b.getSupplier()
+            });
+        }
+    }//GEN-LAST:event_btnCariActionPerformed
 
     /**
      * @param args the command line arguments
@@ -341,12 +529,13 @@ public class DataBarangFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton btnBersihkan;
+    private javax.swing.JButton btnCari;
+    private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnSimpan;
+    private javax.swing.JButton btnTambah;
+    private javax.swing.JButton btnUbah;
+    private javax.swing.JComboBox<String> cmbKategori;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -355,7 +544,6 @@ public class DataBarangFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -372,13 +560,13 @@ public class DataBarangFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel lblTotalBarang;
+    private javax.swing.JTable tblBarang;
+    private javax.swing.JTextField txtCari;
+    private javax.swing.JTextField txtHarga;
+    private javax.swing.JTextField txtIdBarang;
+    private javax.swing.JTextField txtNamaBarang;
+    private javax.swing.JTextField txtStok;
+    private javax.swing.JTextField txtSupplier;
     // End of variables declaration//GEN-END:variables
 }

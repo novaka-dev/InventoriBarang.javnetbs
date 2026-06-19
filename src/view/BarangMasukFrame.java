@@ -23,7 +23,7 @@ import java.awt.Color;
  */
 public class BarangMasukFrame extends javax.swing.JFrame {
     // ── 2. VARIABEL (taruh di dalam class, setelah deklarasi komponen GUI) ───────
- 
+
     private BarangController barangCtrl = new BarangController();
     private BarangMasukController masukCtrl = new BarangMasukController();
     private DefaultTableModel tableModel;
@@ -38,11 +38,11 @@ public class BarangMasukFrame extends javax.swing.JFrame {
         loadComboBarang();
 //        setTanggalHariIni();
         txtTanggal.setDate(new java.util.Date());
-        
+
     }
-    
+
     // ── 4. METHOD-METHOD ─────────────────────────────────────────────────────────
-    
+
     // Setup kolom JTable
     private void initTable() {
         tableModel = new DefaultTableModel(
@@ -75,28 +75,28 @@ public class BarangMasukFrame extends javax.swing.JFrame {
 
         refreshTable();
     }
- 
+
 // Isi ComboBox dengan data barang dari controller
 private void loadComboBarang() {
     cmbPilihBarang.removeAllItems();
     List<Barang> listBarang = barangCtrl.getAllBarang();
- 
+
     if (listBarang.isEmpty()) {
         cmbPilihBarang.addItem("-- Belum ada barang --");
         return;
     }
- 
+
     for (Barang b : listBarang) {
         // Format: "B001 - Spidol"
         cmbPilihBarang.addItem(b.getIdBarang() + " - " + b.getNama());
     }
 }
- 
+
 // Set tanggal otomatis ke hari ini (kalau ga pake JDateChooser)
     private void setTanggalHariIni() {
         txtTanggal.setDate(new java.util.Date());
     }
- 
+
     // Ambil ID barang dari pilihan ComboBox
     // ComboBox isinya "B001 - Spidol", kita ambil bagian "B001" aja
     private String getIdBarangDipilih() {
@@ -104,16 +104,16 @@ private void loadComboBarang() {
         if (selected == null || selected.startsWith("--")) return null;
         return selected.split(" - ")[0]; // ambil bagian sebelum " - "
     }
- 
+
     // Refresh data tabel dari controller
     private void refreshTable() {
     tableModel.setRowCount(0); // Kosongkan tabel riwayat lama
     List<BarangMasuk> list = masukCtrl.getAllBarangMasuk();
-    
+
     for (BarangMasuk bm : list) {
         // Cari objek barang asli berdasarkan idBarang transaksi
         Barang b = barangCtrl.findById(bm.getIdBarang());
-        
+
         // Jika barang ketemu di master, ambil kategorinya. Jika tidak ada, kasih tanda strip
         String kategoriOtomatis = (b != null) ? b.getKategori() : "-";
 
@@ -128,7 +128,7 @@ private void loadComboBarang() {
         });
     }
 }
- 
+
     // Reset semua input form ke kondisi awal
     private void resetForm() {
         cmbPilihBarang.setSelectedIndex(0);
@@ -140,8 +140,8 @@ private void loadComboBarang() {
         txtKeterangan.setText("");
         txtJumlahMasuk.requestFocus();
     }
- 
- 
+
+
 // ── 5. ISI TOMBOL (double click tombol di Design, lalu isi di sini) ──────────
 
 
