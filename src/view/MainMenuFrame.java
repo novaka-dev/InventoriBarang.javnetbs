@@ -19,8 +19,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
      */
     public MainMenuFrame() {
         initComponents();
- 
-
+        this.setLocationRelativeTo(null); // <-- TAMBAHIN INI
         }
 
     /**
@@ -41,22 +40,22 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        jLaporan = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jDataBarang = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        jBarangMasuk = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        jBarangKeluar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,10 +129,15 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jLabel11.setText("Kelola master barang");
         jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 130, -1));
 
-        jButton6.setBackground(new java.awt.Color(80, 80, 80));
-        jButton6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 160));
+        jLaporan.setBackground(new java.awt.Color(80, 80, 80));
+        jLaporan.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLaporan.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLaporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLaporanActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 160));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, 180, 160));
 
@@ -157,10 +161,15 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/electronic-appliance (1).png"))); // NOI18N
         jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 90, 50));
 
-        jButton3.setBackground(new java.awt.Color(80, 80, 80));
-        jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 160));
+        jDataBarang.setBackground(new java.awt.Color(80, 80, 80));
+        jDataBarang.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jDataBarang.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jDataBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDataBarangActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jDataBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 160));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 180, 160));
 
@@ -184,10 +193,15 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jLabel9.setText("Catat penambahan stok");
         jPanel8.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
 
-        jButton4.setBackground(new java.awt.Color(80, 80, 80));
-        jButton4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel8.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 160));
+        jBarangMasuk.setBackground(new java.awt.Color(80, 80, 80));
+        jBarangMasuk.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBarangMasuk.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jBarangMasuk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBarangMasukActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jBarangMasuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 160));
 
         jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 180, 160));
 
@@ -211,10 +225,15 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jLabel10.setText("Kelola master barang");
         jPanel9.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 130, -1));
 
-        jButton5.setBackground(new java.awt.Color(80, 80, 80));
-        jButton5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel9.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 160));
+        jBarangKeluar.setBackground(new java.awt.Color(80, 80, 80));
+        jBarangKeluar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBarangKeluar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jBarangKeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBarangKeluarActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jBarangKeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 160));
 
         jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 180, 160));
 
@@ -233,6 +252,38 @@ public class MainMenuFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jDataBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDataBarangActionPerformed
+        // TODO add your handling code here:
+        DataBarangFrame dataBarang = new DataBarangFrame();
+        dataBarang.setVisible(true);
+        dataBarang.setLocationRelativeTo(null);
+        this.dispose(); // Tutup menu utama
+    }//GEN-LAST:event_jDataBarangActionPerformed
+
+    private void jBarangMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBarangMasukActionPerformed
+        // TODO add your handling code here:
+        BarangMasukFrame barangMasuk = new BarangMasukFrame();
+        barangMasuk.setVisible(true);
+        barangMasuk.setLocationRelativeTo(null);
+        this.dispose(); // Tutup menu utama
+    }//GEN-LAST:event_jBarangMasukActionPerformed
+
+    private void jBarangKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBarangKeluarActionPerformed
+        // TODO add your handling code here:
+        BarangKeluarFrame barangKeluar = new BarangKeluarFrame();
+        barangKeluar.setVisible(true);
+        barangKeluar.setLocationRelativeTo(null);
+        this.dispose(); // Tutup menu utama
+    }//GEN-LAST:event_jBarangKeluarActionPerformed
+
+    private void jLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLaporanActionPerformed
+        // TODO add your handling code here:
+        LaporanFrame laporan = new LaporanFrame();
+        laporan.setVisible(true);
+        laporan.setLocationRelativeTo(null);
+        this.dispose(); // Tutup menu utama
+    }//GEN-LAST:event_jLaporanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,10 +321,9 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jBarangKeluar;
+    private javax.swing.JButton jBarangMasuk;
+    private javax.swing.JButton jDataBarang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -289,6 +339,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JButton jLaporan;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -93,7 +93,7 @@ public class DataBarangFrame extends javax.swing.JFrame {
         txtCari = new javax.swing.JTextField();
         txtNamaBarang = new javax.swing.JTextField();
         txtHarga = new javax.swing.JTextField();
-        btnBersihkan = new javax.swing.JButton();
+        btnKembali = new javax.swing.JButton();
         btnCari = new javax.swing.JButton();
         btnSimpan = new javax.swing.JButton();
         btnUbah = new javax.swing.JButton();
@@ -107,6 +107,7 @@ public class DataBarangFrame extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         cmbKategori = new javax.swing.JComboBox<>();
+        btnBersihkan1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -248,17 +249,17 @@ public class DataBarangFrame extends javax.swing.JFrame {
         txtHarga.setToolTipText("");
         jPanel1.add(txtHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 180, 30));
 
-        btnBersihkan.setBackground(new java.awt.Color(79, 79, 79));
-        btnBersihkan.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        btnBersihkan.setForeground(new java.awt.Color(255, 255, 255));
-        btnBersihkan.setText("Bersihkan");
-        btnBersihkan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnBersihkan.addActionListener(new java.awt.event.ActionListener() {
+        btnKembali.setBackground(new java.awt.Color(79, 79, 79));
+        btnKembali.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        btnKembali.setForeground(new java.awt.Color(255, 255, 255));
+        btnKembali.setText("Kembali");
+        btnKembali.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnKembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBersihkanActionPerformed(evt);
+                btnKembaliActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBersihkan, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 360, 100, 30));
+        jPanel1.add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 750, 250, 30));
 
         btnCari.setBackground(new java.awt.Color(79, 79, 79));
         btnCari.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
@@ -367,6 +368,18 @@ public class DataBarangFrame extends javax.swing.JFrame {
 
         jPanel1.add(cmbKategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 180, 30));
 
+        btnBersihkan1.setBackground(new java.awt.Color(79, 79, 79));
+        btnBersihkan1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        btnBersihkan1.setForeground(new java.awt.Color(255, 255, 255));
+        btnBersihkan1.setText("Bersihkan");
+        btnBersihkan1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnBersihkan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBersihkan1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBersihkan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 360, 100, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -462,9 +475,21 @@ public class DataBarangFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnHapusActionPerformed
 
-    private void btnBersihkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBersihkanActionPerformed
-        clearForm();
-    }//GEN-LAST:event_btnBersihkanActionPerformed
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+        // TODO add your handling code here:
+        // 1. Buat objek instansi dari halaman Main Menu lo
+        // Sesuaikan "MainMenuFrame" dengan nama class JFrame menu utama lo yang asli
+        MainMenuFrame mainMenu = new MainMenuFrame();
+
+        // 2. Munculkan halaman Main Menu ke layar
+        mainMenu.setVisible(true);
+
+        // 3. Atur posisi Main Menu otomatis di tengah layar komputer
+        mainMenu.setLocationRelativeTo(null);
+
+        // 4. Tutup dan hancurkan halaman Barang Masuk saat ini dari memori
+        this.dispose();
+    }//GEN-LAST:event_btnKembaliActionPerformed
 
     private void tblBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBarangMouseClicked
         int row = tblBarang.getSelectedRow();
@@ -492,6 +517,11 @@ public class DataBarangFrame extends javax.swing.JFrame {
             });
         }
     }//GEN-LAST:event_btnCariActionPerformed
+
+    private void btnBersihkan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBersihkan1ActionPerformed
+        // TODO add your handling code here:
+        clearForm();
+    }//GEN-LAST:event_btnBersihkan1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -529,9 +559,10 @@ public class DataBarangFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBersihkan;
+    private javax.swing.JButton btnBersihkan1;
     private javax.swing.JButton btnCari;
     private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnUbah;
