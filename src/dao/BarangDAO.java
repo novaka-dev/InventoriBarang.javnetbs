@@ -24,10 +24,10 @@ public class BarangDAO {
  
     // Saat pertama kali app dibuka, isi data contoh biar combobox ga kosong
     static {
-        dataBarang.add(new Barang("B001", "Spidol Whiteboard", "Alat Tulis", 50, 5000));
-        dataBarang.add(new Barang("B002", "Kertas A4 (Rim)", "Kertas", 30, 45000));
-        dataBarang.add(new Barang("B003", "Pulpen Pilot", "Alat Tulis", 100, 3000));
-        dataBarang.add(new Barang("B004", "Tinta Printer Hitam", "Tinta", 20, 85000));
+        dataBarang.add(new Barang("B001", "Spidol Whiteboard", "Alat Tulis", 50, 5000, "PT Stationery Indonesia"));
+        dataBarang.add(new Barang("B002", "Kertas A4 (Rim)", "Kertas", 30, 45000, "PT Pindo Deli Pulp and Paper Mills"));
+        dataBarang.add(new Barang("B003", "Pulpen Pilot", "Alat Tulis", 100, 3000, "PT Pilot Pen Indonesia"));
+        dataBarang.add(new Barang("B004", "Tinta Printer Hitam", "Tinta", 20, 85000, "PT Karisa Sukses Abadi"));
     }
  
     public List<Barang> getAll() {

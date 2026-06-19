@@ -47,7 +47,6 @@ public class BarangMasukFrame extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -141,7 +140,6 @@ public class BarangMasukFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 250, -1));
-        jPanel3.add(dateChooserCombo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 250, -1));
 
         jButton1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jButton1.setText("Reset");
@@ -217,7 +215,6 @@ public class BarangMasukFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private datechooser.beans.DateChooserCombo dateChooserCombo1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
