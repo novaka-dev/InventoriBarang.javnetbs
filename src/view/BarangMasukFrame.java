@@ -38,6 +38,11 @@ public class BarangMasukFrame extends javax.swing.JFrame {
         loadComboBarang();
 //        setTanggalHariIni();
         txtTanggal.setDate(new java.util.Date());
+        
+        // ── KUNCI FIELD BIAR GA BISA DIEDIT USER ───────
+        txtStokSaatIni.setEditable(false);
+        txtKategori.setEditable(false);
+        txtSupplier.setEditable(false); // Kunci supplier biar otomatis aja
 
     }
 
@@ -257,6 +262,11 @@ private void loadComboBarang() {
                 cmbPilihBarangItemStateChanged(evt);
             }
         });
+        cmbPilihBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPilihBarangActionPerformed(evt);
+            }
+        });
         jPanel3.add(cmbPilihBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 250, -1));
 
         txtStokSaatIni.setBackground(new java.awt.Color(225, 225, 225));
@@ -419,9 +429,14 @@ private void loadComboBarang() {
 
                     // 2. Otomatis set kategori sesuai data master barang (BARU)
                     txtKategori.setText(barang.getKategori());
+                    
+                    // 3. Otomatis set supplier sesuai data master barang (BARU 🌟)
+                    txtSupplier.setText(barang.getSupplier());
                 }
             } else {
                 txtStokSaatIni.setText("");
+                txtKategori.setText("");
+                txtSupplier.setText(""); // Kosongkan jika tidak ada pilihan
             }
         }
     }//GEN-LAST:event_cmbPilihBarangItemStateChanged
@@ -430,6 +445,10 @@ private void loadComboBarang() {
         // TODO add your handling code here:
         resetForm();
     }//GEN-LAST:event_btnReset1ActionPerformed
+
+    private void cmbPilihBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPilihBarangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbPilihBarangActionPerformed
 
     /**
      * @param args the command line arguments
