@@ -180,10 +180,10 @@ private void loadComboBarang() {
         txtKeterangan = new javax.swing.JTextArea();
         btnKembali = new javax.swing.JButton();
         btnSimpan = new javax.swing.JButton();
-        txtTanggal = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
         txtKategori = new javax.swing.JTextField();
         btnReset1 = new javax.swing.JButton();
+        txtTanggal = new com.toedter.calendar.JDateChooser();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -304,7 +304,6 @@ private void loadComboBarang() {
             }
         });
         jPanel3.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 210, 40));
-        jPanel3.add(txtTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 250, -1));
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -324,6 +323,7 @@ private void loadComboBarang() {
             }
         });
         jPanel3.add(btnReset1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 210, 40));
+        jPanel3.add(txtTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 250, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 500, 410));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 583, 530, 0));

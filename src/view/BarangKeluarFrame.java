@@ -45,7 +45,6 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
         txttujuan = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtketerangan = new javax.swing.JTextArea();
-        datetanggal = new datechooser.beans.DateChooserCombo();
         btnreset = new javax.swing.JButton();
         btnsimpan = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -123,7 +122,6 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtketerangan);
 
         jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 250, -1));
-        jPanel4.add(datetanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 250, -1));
 
         btnreset.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         btnreset.setText("Reset");
@@ -239,7 +237,6 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnreset;
     private javax.swing.JButton btnsimpan;
     private javax.swing.JComboBox<String> cmbbarang;
-    private datechooser.beans.DateChooserCombo datetanggal;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
