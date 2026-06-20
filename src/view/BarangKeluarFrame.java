@@ -3,24 +3,85 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
-
+import controller.BarangController;
+import controller.BarangKeluarController;
+import model.Barang;
+import model.BarangKeluar;
 import java.awt.Color;
-import javax.swing.*;
-import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Novaka Saputra
  */
 public class BarangKeluarFrame extends javax.swing.JFrame {
-
+    private final BarangController barangController = new BarangController();
+    private final BarangKeluarController bkc = new BarangKeluarController();
+    private DefaultTableModel tableModel;
     /**
      * Creates new form LaporanFrame
      */
     public BarangKeluarFrame() {
         initComponents();
+        initTable();
+        tampilComboboxBarang();
+        refreshTableDanId();
+        resetForm();
+    }
+    private void initTable() {
+        String[] kolom = {"ID Transaksi", "Nama Barang", "Jumlah", "Tujuan", "Tanggal", "Keterangan"};
+        tableModel = new DefaultTableModel(kolom, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Tabel tidak bisa diedit manual
+            }
+        };
+        // Catatan: Ganti 'tblBarangKeluar' dengan nama variabel JTable yang ada di dalam jScrollPane2 Anda
+        jTable1.setModel(tableModel); 
     }
 
+    // 2. Load data barang ke ComboBox cmbbarang saat form terbuka
+    private void tampilComboboxBarang() {
+        cmbbarang.removeAllItems(); 
+        cmbbarang.addItem("-- PILIH BARANG --");
+        
+        List<Barang> listBarang = barangController.getAllBarang();
+        for (Barang b : listBarang) {
+            cmbbarang.addItem(b.getIdBarang() + " - " + b.getNama());
+        }
+    }
+
+    // 3. Refresh tabel riwayat dan pasang tanggal default ke jDateChooser1
+    private void refreshTableDanId() {
+        tableModel.setRowCount(0);
+        
+        List<BarangKeluar> riwayat = (List<BarangKeluar>) (List<?>) bkc.ambilSemuaRiwayat();
+        for (BarangKeluar bk : riwayat) {
+            Object[] data = {
+                bk.getIdTransaksi(),
+                bk.getNamaBarang(),
+                bk.getJumlah(),
+                bk.getTujuan(),
+                bk.getTanggal(),
+                bk.getKeterangan()
+            };
+            tableModel.addRow(data);
+        }
+        
+        // Mengatur tanggal hari ini ke jDateChooser1
+        jDateChooser1.setDate(new Date()); 
+    }
+    private void resetForm() {
+    cmbbarang.setSelectedIndex(0);
+    txtstoksaatini.setText("");
+    txtjumlahkeluar.setText("");
+    txttujuan.setText("");
+    txtketerangan.setText("");
+    jDateChooser1.setDate(new java.util.Date()); // Mengembalikan tanggal ke hari ini
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,6 +108,7 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
         txtketerangan = new javax.swing.JTextArea();
         btnreset = new javax.swing.JButton();
         btnsimpan = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -105,6 +167,11 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
 
         cmbbarang.setBackground(new java.awt.Color(225, 225, 225));
         cmbbarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbbarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbbarangActionPerformed(evt);
+            }
+        });
         jPanel4.add(cmbbarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 250, -1));
 
         txtstoksaatini.setBackground(new java.awt.Color(225, 225, 225));
@@ -131,7 +198,13 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
         btnsimpan.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         btnsimpan.setText("Simpan");
         btnsimpan.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnsimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsimpanActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnsimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 210, 40));
+        jPanel4.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 250, -1));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 500, 360));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 583, 530, 0));
@@ -197,6 +270,62 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmbbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbbarangActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = cmbbarang.getSelectedIndex();
+        
+        if (selectedIndex <= 0) {
+            txtstoksaatini.setText(""); 
+            return;
+        }
+        
+        String selectedItem = cmbbarang.getSelectedItem().toString();
+        String idBarang = selectedItem.split(" - ")[0];
+        
+        Barang b = barangController.findById(idBarang);
+        if (b != null) {
+            txtstoksaatini.setText(String.valueOf(b.getStok()));
+        }
+    }//GEN-LAST:event_cmbbarangActionPerformed
+
+    private void btnsimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsimpanActionPerformed
+        // TODO add your handling code here:
+        if (cmbbarang.getSelectedIndex() <= 0) {
+            JOptionPane.showMessageDialog(this, "Pilih barang terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // B. Ambil ID Barang
+        String selectedItem = cmbbarang.getSelectedItem().toString();
+        String idBarang = selectedItem.split(" - ")[0];
+        
+        // C. Ambil data dari textfield sesuai variabel Anda
+        String jumlahStr = txtjumlahkeluar.getText().trim(); 
+        String tujuan = txttujuan.getText().trim();         
+        String keterangan = txtketerangan.getText().trim(); 
+        
+        // D. Format Tanggal dari jDateChooser1
+        String tanggalStr = "";
+        if (jDateChooser1.getDate() != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            tanggalStr = sdf.format(jDateChooser1.getDate());
+        }
+
+        // E. Proses ke Controller
+        String hasil = bkc.catatBarangKeluar(idBarang, jumlahStr, tujuan, tanggalStr, keterangan);
+        
+        // F. Respon popup balik
+        if (hasil.startsWith("Sukses")) {
+            JOptionPane.showMessageDialog(this, hasil, "Informasi", JOptionPane.INFORMATION_MESSAGE);
+            resetForm();
+            refreshTableDanId();
+        } else {
+            JOptionPane.showMessageDialog(this, hasil, "Error Transaksi", JOptionPane.ERROR_MESSAGE);
+        
+}
+
+    }//GEN-LAST:event_btnsimpanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -237,6 +366,7 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnreset;
     private javax.swing.JButton btnsimpan;
     private javax.swing.JComboBox<String> cmbbarang;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

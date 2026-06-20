@@ -3,19 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/view/BarangMasukFrame.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/view/MainMenuFrame.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/controller/BarangKeluarController.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/model/BarangKeluar.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/model/Barang.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/model/BarangMasuk.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/view/BarangKeluarFrame.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/controller/BarangController.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/view/DataBarangFrame.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/model/Transaksi.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/controller/BarangMasukController.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/dao/BarangDAO.java</file>
-            <file>file:/C:/Users/Adli1/Documents/InventoriBarang.javnetbs/src/view/LaporanFrame.java</file>
+            <file>file:/C:/PUNYA%20GUA/Arya_Semester%202%20kebutuhan/Pemograman%20Berbasis%20Objek/Project%20Akhir/InventoriBarang.javnetbs/src/controller/BarangMasukController.java</file>
+            <file>file:/C:/PUNYA%20GUA/Arya_Semester%202%20kebutuhan/Pemograman%20Berbasis%20Objek/Project%20Akhir/InventoriBarang.javnetbs/src/controller/BarangKeluarController.java</file>
+            <file>file:/C:/PUNYA%20GUA/Arya_Semester%202%20kebutuhan/Pemograman%20Berbasis%20Objek/Project%20Akhir/InventoriBarang.javnetbs/src/controller/BarangController.java</file>
+            <file>file:/C:/PUNYA%20GUA/Arya_Semester%202%20kebutuhan/Pemograman%20Berbasis%20Objek/Project%20Akhir/InventoriBarang.javnetbs/src/model/BarangKeluar.java</file>
+            <file>file:/C:/PUNYA%20GUA/Arya_Semester%202%20kebutuhan/Pemograman%20Berbasis%20Objek/Project%20Akhir/InventoriBarang.javnetbs/src/dao/BarangKeliar.java</file>
+            <file>file:/C:/PUNYA%20GUA/Arya_Semester%202%20kebutuhan/Pemograman%20Berbasis%20Objek/Project%20Akhir/InventoriBarang.javnetbs/src/view/BarangKeluarFrame.java</file>
         </group>
     </open-files>
 </project-private>
