@@ -14,10 +14,16 @@ package model;
     public BarangKeluar() {}
 
     public BarangKeluar(String idTransaksi, String idBarang, String namaBarang,
-                       int jumlah, String tanggal, String keterangan, String tujuan) {
-        super(idTransaksi, idBarang, namaBarang, jumlah, tanggal, keterangan);
-        this.tujuan = tujuan;
-    }
+                    int jumlah, String tanggal, String keterangan,
+                    String tujuan,
+                    int stokSebelum, int stokSesudah) {
+
+    super(idTransaksi, idBarang, namaBarang,
+          jumlah, tanggal, keterangan,
+          stokSebelum, stokSesudah);
+
+    this.tujuan = tujuan;
+}
 
     public String getTujuan() {
         return tujuan;

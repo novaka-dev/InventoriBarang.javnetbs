@@ -109,6 +109,7 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
         btnreset = new javax.swing.JButton();
         btnsimpan = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        btnKembali = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -206,7 +207,17 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
         jPanel4.add(btnsimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 210, 40));
         jPanel4.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 250, -1));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 500, 360));
+        btnKembali.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        btnKembali.setText("Kembali");
+        btnKembali.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKembaliActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 430, 40));
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 500, 400));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 583, 530, 0));
 
         jPanel5.setBackground(new java.awt.Color(80, 80, 80));
@@ -227,7 +238,7 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
 
         jPanel5.add(jScrollPane2);
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 500, 470));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, 500, 470));
 
         jPanel2.setBackground(new java.awt.Color(45, 122, 80));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -326,6 +337,22 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnsimpanActionPerformed
 
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+        // TODO add your handling code here:
+        // 1. Buat objek instansi dari halaman Main Menu lo
+        // Sesuaikan "MainMenuFrame" dengan nama class JFrame menu utama lo yang asli
+        MainMenuFrame mainMenu = new MainMenuFrame();
+
+        // 2. Munculkan halaman Main Menu ke layar
+        mainMenu.setVisible(true);
+
+        // 3. Atur posisi Main Menu otomatis di tengah layar komputer
+        mainMenu.setLocationRelativeTo(null);
+
+        // 4. Tutup dan hancurkan halaman Barang Masuk saat ini dari memori
+        this.dispose();
+    }//GEN-LAST:event_btnKembaliActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -363,6 +390,7 @@ public class BarangKeluarFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Icon;
+    private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnreset;
     private javax.swing.JButton btnsimpan;
     private javax.swing.JComboBox<String> cmbbarang;

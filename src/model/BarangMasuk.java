@@ -11,13 +11,17 @@ package model;
 public class BarangMasuk extends Transaksi {
     private String supplier;
  
-    public BarangMasuk() {}
- 
     public BarangMasuk(String idTransaksi, String idBarang, String namaBarang,
-                       int jumlah, String tanggal, String keterangan, String supplier) {
-        super(idTransaksi, idBarang, namaBarang, jumlah, tanggal, keterangan);
-        this.supplier = supplier;
-    }
+                   int jumlah, String tanggal, String keterangan,
+                   String supplier,
+                   int stokSebelum, int stokSesudah) {
+
+    super(idTransaksi, idBarang, namaBarang,
+          jumlah, tanggal, keterangan,
+          stokSebelum, stokSesudah);
+
+    this.supplier = supplier;
+}
  
     public String getSupplier()         { return supplier; }
     public void   setSupplier(String s) { this.supplier = s; }

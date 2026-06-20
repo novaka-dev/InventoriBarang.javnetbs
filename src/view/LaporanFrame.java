@@ -4,9 +4,10 @@
  */
 package view;
 import dao.BarangDAO;
+import dao.BarangKeliar;
 import dao.BarangMasukDAO;
-import model.Barang;
 import model.BarangMasuk;
+import model.BarangKeluar;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -16,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 public class LaporanFrame extends javax.swing.JFrame {
     private BarangDAO barangDAO = new BarangDAO();
     private BarangMasukDAO barangMasukDAO = new BarangMasukDAO();
+    private BarangKeliar barangKeluarDAO = new BarangKeliar();
     private DefaultTableModel model;
     /**
      * Creates new form BarangKeluarFrame
@@ -27,10 +29,12 @@ public class LaporanFrame extends javax.swing.JFrame {
             "ID Transaksi",
             "Tanggal",
             "Nama Barang",
-            "Stok Sebelumnya",
-            "Jumlah Masuk",
-            "Supplier",
-            "Stok Sesudahnya"
+            "Tipe",
+            "Stok Sebelum",
+            "Jumlah",
+            "Stok Sesudah",
+            "Asal / Tujuan",
+            "Keterangan"
         }, 0
     );
 
@@ -43,31 +47,45 @@ public class LaporanFrame extends javax.swing.JFrame {
     private void loadStatistik() {
         Totalitem.setText(String.valueOf(barangDAO.getAll().size()));
         TtlBrngMsk.setText(String.valueOf(barangMasukDAO.getAll().size()));
-        TtlBrngklr.setText("0");
+        TtlBrngklr.setText(
+    String.valueOf(barangKeluarDAO.getAll().size())
+        );
 }
     
     private void loadLaporanMasuk() {
         model.setRowCount(0);
         List<BarangMasuk> list = barangMasukDAO.getAll();
 
-        for (BarangMasuk bm : list) {
-            Barang barang = barangDAO.findById(bm.getIdBarang());
-            int stokSesudah = 0;
-
-            if (barang != null) {
-                stokSesudah = barang.getStok();
-            }
-
-            int stokSebelum = stokSesudah - bm.getJumlah();
+        // BARANG MASUK
+        for (BarangMasuk bm : barangMasukDAO.getAll()) {
+            // MASUK
             model.addRow(new Object[]{
-                bm.getIdTransaksi(),
-                bm.getTanggal(),
-                bm.getNamaBarang(),
-                stokSebelum,
-                bm.getJumlah(),
-                bm.getSupplier(),
-                stokSesudah
-            });
+            bm.getIdTransaksi(),
+            bm.getTanggal(),
+            bm.getNamaBarang(),
+            "✅ MASUK",
+            bm.getStokSebelum(),
+            bm.getJumlah(),
+            bm.getStokSesudah(),
+            bm.getSupplier(),
+            bm.getKeterangan()
+        });
+        }
+        
+        // BARANG KELUAR
+        for (BarangKeluar bk : barangKeluarDAO.getAll()) {
+            // KELUAR
+            model.addRow(new Object[]{
+            bk.getIdTransaksi(),
+            bk.getTanggal(),
+            bk.getNamaBarang(),
+            "❌ KELUAR",
+            bk.getStokSebelum(),
+            bk.getJumlah(),
+            bk.getStokSesudah(),
+            bk.getTujuan(),
+            bk.getKeterangan()
+        });
         }
 }
 
@@ -243,7 +261,6 @@ public class LaporanFrame extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tblLaporan.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Poppins", 0, 12))); // NOI18N
-        tblLaporan.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         tblLaporan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},

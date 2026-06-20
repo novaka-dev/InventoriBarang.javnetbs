@@ -79,14 +79,19 @@ public class BarangKeluarController {
 
         // 5. Jika Semua Validasi Lolos, Buat Objek Transaksi Baru
         String idTransaksiBaru = bkDAO.generateId();
+        int stokSebelum = barang.getStok();
+        int stokSesudah = stokSebelum - jumlahKeluar;
+
         BarangKeluar bk = new BarangKeluar(
-            idTransaksiBaru, 
-            idBarang, 
-            barang.getNama(), // Mengambil nama dari data master barang
-            jumlahKeluar, 
-            tanggal, 
-            keterangan, 
-            tujuan
+            idTransaksiBaru,
+            idBarang,
+            barang.getNama(),
+            jumlahKeluar,
+            tanggal,
+            keterangan,
+            tujuan,
+            stokSebelum,
+            stokSesudah
         );
 
         // 6. Eksekusi Penyimpanan Transaksi & Pemotongan Stok

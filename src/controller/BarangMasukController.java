@@ -8,6 +8,7 @@ import dao.BarangDAO;
 import dao.BarangMasukDAO;
 import model.BarangMasuk;
 import java.util.List;
+import model.Barang;
 /**
  *
  * @author Novaka Saputra
@@ -22,9 +23,21 @@ public class BarangMasukController {
                                      String keterangan, String supplier) {
         String idTransaksi = masukDAO.generateId();
  
+        Barang barang = barangDAO.findById(idBarang);
+
+        int stokSebelum = barang.getStok();
+        int stokSesudah = stokSebelum + jumlah;
+
         BarangMasuk transaksi = new BarangMasuk(
-            idTransaksi, idBarang, namaBarang,
-            jumlah, tanggal, keterangan, supplier
+            idTransaksi,
+            idBarang,
+            namaBarang,
+            jumlah,
+            tanggal,
+            keterangan,
+            supplier,
+            stokSebelum,
+            stokSesudah
         );
  
         boolean berhasil = masukDAO.simpan(transaksi);
