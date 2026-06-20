@@ -3,19 +3,73 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
+import dao.BarangDAO;
+import dao.BarangMasukDAO;
+import model.Barang;
+import model.BarangMasuk;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Novaka Saputra
  */
 public class LaporanFrame extends javax.swing.JFrame {
-
+    private BarangDAO barangDAO = new BarangDAO();
+    private BarangMasukDAO barangMasukDAO = new BarangMasukDAO();
+    private DefaultTableModel model;
     /**
      * Creates new form BarangKeluarFrame
      */
     public LaporanFrame() {
         initComponents();
+        model = new DefaultTableModel(
+        new Object[]{
+            "ID Transaksi",
+            "Tanggal",
+            "Nama Barang",
+            "Stok Sebelumnya",
+            "Jumlah Masuk",
+            "Supplier",
+            "Stok Sesudahnya"
+        }, 0
+    );
+
+        tblLaporan.setModel(model);
+        model = (DefaultTableModel) tblLaporan.getModel();
+        loadStatistik();
+        loadLaporanMasuk();
     }
+    
+    private void loadStatistik() {
+        Totalitem.setText(String.valueOf(barangDAO.getAll().size()));
+        TtlBrngMsk.setText(String.valueOf(barangMasukDAO.getAll().size()));
+        TtlBrngklr.setText("0");
+}
+    
+    private void loadLaporanMasuk() {
+        model.setRowCount(0);
+        List<BarangMasuk> list = barangMasukDAO.getAll();
+
+        for (BarangMasuk bm : list) {
+            Barang barang = barangDAO.findById(bm.getIdBarang());
+            int stokSesudah = 0;
+
+            if (barang != null) {
+                stokSesudah = barang.getStok();
+            }
+
+            int stokSebelum = stokSesudah - bm.getJumlah();
+            model.addRow(new Object[]{
+                bm.getIdTransaksi(),
+                bm.getTanggal(),
+                bm.getNamaBarang(),
+                stokSebelum,
+                bm.getJumlah(),
+                bm.getSupplier(),
+                stokSesudah
+            });
+        }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,13 +85,13 @@ public class LaporanFrame extends javax.swing.JFrame {
         Background = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         lblTitleTotalItem = new javax.swing.JLabel();
-        lblTotalItem = new javax.swing.JLabel();
+        Totalitem = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblTitleBarangMasuk = new javax.swing.JLabel();
-        lblBarangMasuk = new javax.swing.JLabel();
+        TtlBrngMsk = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         lblTitleBarangKeluar = new javax.swing.JLabel();
-        lblBarangKeluar = new javax.swing.JLabel();
+        TtlBrngklr = new javax.swing.JLabel();
         btnRefresh = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -65,8 +119,8 @@ public class LaporanFrame extends javax.swing.JFrame {
         lblTitleTotalItem.setForeground(new java.awt.Color(255, 255, 255));
         lblTitleTotalItem.setText("Total Item");
 
-        lblTotalItem.setForeground(new java.awt.Color(255, 255, 255));
-        lblTotalItem.setText("0");
+        Totalitem.setForeground(new java.awt.Color(255, 255, 255));
+        Totalitem.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -79,7 +133,7 @@ public class LaporanFrame extends javax.swing.JFrame {
                         .addComponent(lblTitleTotalItem, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblTotalItem, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Totalitem, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(66, 66, 66))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -88,7 +142,7 @@ public class LaporanFrame extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(lblTitleTotalItem)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblTotalItem, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Totalitem, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -101,8 +155,8 @@ public class LaporanFrame extends javax.swing.JFrame {
         lblTitleBarangMasuk.setForeground(new java.awt.Color(255, 255, 255));
         lblTitleBarangMasuk.setText("Barang Masuk");
 
-        lblBarangMasuk.setForeground(new java.awt.Color(255, 255, 255));
-        lblBarangMasuk.setText("0");
+        TtlBrngMsk.setForeground(new java.awt.Color(255, 255, 255));
+        TtlBrngMsk.setText("0");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -115,7 +169,7 @@ public class LaporanFrame extends javax.swing.JFrame {
                         .addComponent(lblTitleBarangMasuk)
                         .addGap(33, 33, 33))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblBarangMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TtlBrngMsk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(66, 66, 66))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -124,7 +178,7 @@ public class LaporanFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(lblTitleBarangMasuk)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblBarangMasuk)
+                .addComponent(TtlBrngMsk)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -137,9 +191,9 @@ public class LaporanFrame extends javax.swing.JFrame {
         lblTitleBarangKeluar.setForeground(new java.awt.Color(255, 255, 255));
         lblTitleBarangKeluar.setText("Barang Keluar");
 
-        lblBarangKeluar.setBackground(new java.awt.Color(255, 255, 255));
-        lblBarangKeluar.setForeground(new java.awt.Color(255, 255, 255));
-        lblBarangKeluar.setText("0");
+        TtlBrngklr.setBackground(new java.awt.Color(255, 255, 255));
+        TtlBrngklr.setForeground(new java.awt.Color(255, 255, 255));
+        TtlBrngklr.setText("0");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -151,7 +205,7 @@ public class LaporanFrame extends javax.swing.JFrame {
                 .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblBarangKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TtlBrngklr, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
         );
         jPanel4Layout.setVerticalGroup(
@@ -160,7 +214,7 @@ public class LaporanFrame extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(lblTitleBarangKeluar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblBarangKeluar)
+                .addComponent(TtlBrngklr)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -168,10 +222,20 @@ public class LaporanFrame extends javax.swing.JFrame {
 
         btnRefresh.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         btnRefresh.setText("REFRESH");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
         Background.add(btnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 510, -1, -1));
 
         btnClose.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        btnClose.setText("CLOSE");
+        btnClose.setText("KEMBALI");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
         Background.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 510, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(80, 80, 80));
@@ -252,6 +316,18 @@ public class LaporanFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        loadStatistik();
+        loadLaporanMasuk();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        MainMenuFrame mainMenu = new MainMenuFrame();
+        mainMenu.setVisible(true);
+        mainMenu.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -291,6 +367,9 @@ public class LaporanFrame extends javax.swing.JFrame {
     private javax.swing.JPanel Background;
     private javax.swing.JLabel Icon;
     private javax.swing.JPanel JpanelJudul;
+    private javax.swing.JLabel Totalitem;
+    private javax.swing.JLabel TtlBrngMsk;
+    private javax.swing.JLabel TtlBrngklr;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JPanel jPanel1;
@@ -298,13 +377,10 @@ public class LaporanFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblBarangKeluar;
-    private javax.swing.JLabel lblBarangMasuk;
     private javax.swing.JLabel lblJudulLaporan;
     private javax.swing.JLabel lblTitleBarangKeluar;
     private javax.swing.JLabel lblTitleBarangMasuk;
     private javax.swing.JLabel lblTitleTotalItem;
-    private javax.swing.JLabel lblTotalItem;
     private javax.swing.JTable tblLaporan;
     // End of variables declaration//GEN-END:variables
 }
